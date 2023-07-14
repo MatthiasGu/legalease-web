@@ -26,7 +26,7 @@ export type IFirm = {
   websiteUrl: string;
 }
 
-const FirmRow = styled.div`
+const Row = styled.div`
   display: flex;
   flex-direction: row;
 `
@@ -39,19 +39,28 @@ const TierRanking = styled.div`
 
   line-height: 24px;
   color: white;
-  font-family: 'Inter';
   font-size: 17px;
-  weight: 700;
+  font-weight: 700;
 `
 
+const FirmName = styled.h3`
+  line-height: 25px;
+  font-size: 20px;
+  font-weight: 700;
+  margin: 0;
+`
 
 const FirmView: React.FC<{firm: IFirm, tier: string}> = ({tier, firm}) => {
   console.log(firm);
 
   return (
-    <FirmRow>
+    <Row>
       <TierRanking> {tier} </TierRanking>
-    </FirmRow>
+      <FirmName> {firm.name} </FirmName>
+      <Row>
+        
+      </Row>
+    </Row>
   )
 }
 
