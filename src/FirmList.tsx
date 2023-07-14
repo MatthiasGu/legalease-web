@@ -24,34 +24,38 @@ const FirmList: React.FC = () => {
     );
   }
 
-  function* sliceFirms(firms: IFirmData[]) {
-    for (let i = 0; i < firms.length; i++) {
-      let left = i;
-      while (i < firms.length - 1 && firms[i].tier === firms[i + 1].tier) {
-        i++;
-      }
-      yield firms.slice(left, i);
-    }
-  }
-
   useEffect(() => {
     getFirms();
   }, [])
 
-  let slicedData = [...sliceFirms(firmsData)];
-  console.log(slicedData);
+  let firmsDataByTier = [...groupFirmsByTier(firmsData)];
+  console.log(firmsDataByTier);
 
   return (
     <div> 
-      {slicedData.map((firmsData) => (
+      {firmsDataByTier.map((firmsData) => (
         <div>
           {firmsData.map((firmData) => (
-            <FirmView {...firmData.firm}></FirmView>
+            <FirmView tier={parseTier(firmData.tier)} firm = {firmData.firm}></FirmView>
           ))}      
         </div>      
       ))} 
     </div>
   )
+}
+
+function* groupFirmsByTier(firms: IFirmData[]) {
+  for (let i = 0; i < firms.length; i++) {
+    let left = i;
+    while (i < firms.length - 1 && firms[i].tier === firms[i + 1].tier) {
+      i++;
+    }
+    yield firms.slice(left, i);
+  }
+}
+
+function parseTier(tierString: string) {
+  return tierString.split("_")[1];
 }
 
 export default FirmList

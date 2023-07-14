@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import styled from 'styled-components'
 
 export type IBadge = {
   id: string;
@@ -25,10 +26,33 @@ export type IFirm = {
   websiteUrl: string;
 }
 
-const FirmView: React.FC<IFirm> = ({...firm}) => {
+const FirmRow = styled.div`
+  display: flex;
+  flex-direction: row;
+`
+
+const TierRanking = styled.div`
+  width: 24px;
+  height: 24px;
+  border-radius: 81px;
+  background-color: #333333;
+
+  line-height: 24px;
+  color: white;
+  font-family: 'Inter';
+  font-size: 17px;
+  weight: 700;
+`
+
+
+const FirmView: React.FC<{firm: IFirm, tier: string}> = ({tier, firm}) => {
   console.log(firm);
 
-  return <div></div>
+  return (
+    <FirmRow>
+      <TierRanking> {tier} </TierRanking>
+    </FirmRow>
+  )
 }
 
 export default FirmView;
