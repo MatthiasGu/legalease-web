@@ -1,0 +1,14 @@
+.star-rating {
+  line-height: 1;
+}
+
+.star {
+  color: grey;
+}
+
+.star-half {
+  background: linear-gradient(90deg, black 50%, grey 50%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
