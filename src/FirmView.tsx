@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import './FirmView.css'
 
@@ -63,14 +63,32 @@ const FirmViewWrapper = styled.div`
   background-color: #DBECF2;
 `
 
-function convertRatingToStars(rating: number) {
-  const nearestHundred = Math.round(rating/100) * 100;
-  console.log(nearestHundred);
-  return nearestHundred / 200;
+const FirmView: React.FC<{firm: IFirm, tier: string}> = ({tier, firm}) => {
+  return (
+    <FirmViewWrapper>
+      <Row>
+        <TierRanking> {tier} </TierRanking>
+        <FirmName> {firm.name} </FirmName>
+      </Row>
+      <Row>
+        <FirmRating firmRegion = {firm.firmRegions[0]}/>
+      </Row>
+    </FirmViewWrapper>
+  )
+}
+
+const FirmRating: React.FC<{firmRegion: IFirmRegion}> = ({firmRegion}) => {
+  return (
+    <Row style={{marginLeft: "32px"}}>
+      <FirmRatingLabel> Expertise and reputation</FirmRatingLabel>
+      <StarRating stars={convertRatingToStars(firmRegion.expertiseAndReputationRating)} /> 
+      <FirmRatingLabel> Client Satisfaction</FirmRatingLabel>
+      <StarRating stars={convertRatingToStars(firmRegion.clientSatisfactionRating)} /> 
+    </Row>
+  )
 }
 
 const StarRating: React.FC<{stars: number}> = ({ stars }) => {
-  console.log(stars);
   return <div className="star-rating">
     {[...Array(5)].map((star, idx) => {
       let className = "star";
@@ -85,31 +103,10 @@ const StarRating: React.FC<{stars: number}> = ({ stars }) => {
     })}
   </div>;
 }
-const FirmRating: React.FC<{firmRegion: IFirmRegion}> = ({firmRegion}) => {
-  return (
-    <Row style={{marginLeft: "32px"}}>
-      <FirmRatingLabel> Expertise and reputation</FirmRatingLabel>
-      <StarRating stars={convertRatingToStars(firmRegion.expertiseAndReputationRating)} /> 
-      <FirmRatingLabel> Client Satisfaction</FirmRatingLabel>
-      <StarRating stars={convertRatingToStars(firmRegion.clientSatisfactionRating)} /> 
-    </Row>
-  )
-}
 
-const FirmView: React.FC<{firm: IFirm, tier: string}> = ({tier, firm}) => {
-  console.log(firm);
-
-  return (
-    <FirmViewWrapper>
-      <Row>
-        <TierRanking> {tier} </TierRanking>
-        <FirmName> {firm.name} </FirmName>
-      </Row>
-      <Row>
-        <FirmRating firmRegion = {firm.firmRegions[0]}/>
-      </Row>
-    </FirmViewWrapper>
-  )
+function convertRatingToStars(rating: number) {
+  const nearestHundred = Math.round(rating/100) * 100;
+  return nearestHundred / 200;
 }
 
 export default FirmView;

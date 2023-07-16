@@ -38,7 +38,6 @@ const FirmList: React.FC = () => {
   }, [])
 
   let firmsDataByTier = [...groupFirmsByTier(firmsData)];
-  console.log(firmsDataByTier);
 
   return (
     <div> 
