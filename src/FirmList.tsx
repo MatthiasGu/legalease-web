@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import {apiBaseUrl} from './index'
 import FirmView, { IFirm } from './FirmView';
+import styled from 'styled-components';
 
 type IFirmData = {
   diversity: boolean;
@@ -11,6 +12,14 @@ type IFirmData = {
   tier: string;
   trend: string;  
 }
+
+const FirmsTier = styled.div`
+  margin-bottom: 24px;
+`;
+
+const Divider = styled.div`
+  height: 2px;
+`;
 
 const FirmList: React.FC = () => {
   const [firmsData, setFirmsData] = useState<IFirmData[]>([]);
@@ -34,11 +43,14 @@ const FirmList: React.FC = () => {
   return (
     <div> 
       {firmsDataByTier.map((firmsData) => (
-        <div>
+        <FirmsTier>
           {firmsData.map((firmData) => (
-            <FirmView tier={parseTier(firmData.tier)} firm = {firmData.firm}></FirmView>
+            <>
+              <FirmView tier={parseTier(firmData.tier)} firm = {firmData.firm}></FirmView>
+              <Divider/>
+            </>
           ))}      
-        </div>      
+        </FirmsTier>      
       ))} 
     </div>
   )

@@ -30,6 +30,7 @@ export type IFirm = {
 const Row = styled.div`
   display: flex;
   flex-direction: row;
+  gap: 8px;
 `
 
 const TierRanking = styled.div`
@@ -54,6 +55,12 @@ const FirmName = styled.h3`
 const FirmRatingLabel = styled.label`
   font-size: 12px;
   text-transform: uppercase;
+  font-weight: 600;
+`
+
+const FirmViewWrapper = styled.div`
+  padding: 16px;
+  background-color: #DBECF2;
 `
 
 function convertRatingToStars(rating: number) {
@@ -80,7 +87,7 @@ const StarRating: React.FC<{stars: number}> = ({ stars }) => {
 }
 const FirmRating: React.FC<{firmRegion: IFirmRegion}> = ({firmRegion}) => {
   return (
-    <Row>
+    <Row style={{marginLeft: "32px"}}>
       <FirmRatingLabel> Expertise and reputation</FirmRatingLabel>
       <StarRating stars={convertRatingToStars(firmRegion.expertiseAndReputationRating)} /> 
       <FirmRatingLabel> Client Satisfaction</FirmRatingLabel>
@@ -93,15 +100,15 @@ const FirmView: React.FC<{firm: IFirm, tier: string}> = ({tier, firm}) => {
   console.log(firm);
 
   return (
-    <>
-    <Row>
-      <TierRanking> {tier} </TierRanking>
-      <FirmName> {firm.name} </FirmName>
-    </Row>
-    <Row>
-      <FirmRating firmRegion = {firm.firmRegions[0]}/>
-    </Row>
-    </>
+    <FirmViewWrapper>
+      <Row>
+        <TierRanking> {tier} </TierRanking>
+        <FirmName> {firm.name} </FirmName>
+      </Row>
+      <Row>
+        <FirmRating firmRegion = {firm.firmRegions[0]}/>
+      </Row>
+    </FirmViewWrapper>
   )
 }
 
