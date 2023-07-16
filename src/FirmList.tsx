@@ -41,7 +41,7 @@ const FirmList: React.FC = () => {
 
   return (
     <div> 
-      {firmsDataByTier.map((firmsData) => (
+      {firmsDataByTier.map((firmsData, idx) => (
         <FirmsTier>
           {firmsData.map((firmData) => (
             <>
@@ -61,7 +61,7 @@ function* groupFirmsByTier(firms: IFirmData[]) {
     while (i < firms.length - 1 && firms[i].tier === firms[i + 1].tier) {
       i++;
     }
-    yield firms.slice(left, i);
+    yield firms.slice(left, i + 1);
   }
 }
 

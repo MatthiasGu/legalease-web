@@ -33,11 +33,11 @@ const Row = styled.div`
   gap: 8px;
 `
 
-const TierRanking = styled.div`
+const TierRanking = styled.div<{ disabled?: boolean;}>`
   width: 24px;
   height: 24px;
   border-radius: 81px;
-  background-color: #333333;
+  background-color: ${props => props.disabled? '#BDBDBD' : '#333333'};
 
   line-height: 24px;
   color: white;
@@ -45,11 +45,13 @@ const TierRanking = styled.div`
   font-weight: 700;
 `
 
-const FirmName = styled.h3`
+const FirmName = styled.h3<{ disabled?: boolean;}>`
   line-height: 25px;
   font-size: 20px;
-  font-weight: 700;
+  font-weight: ${props => props.disabled ? 400 : 700};
+  color: ${props => props.disabled && '#4F4F4F'};
   margin: 0;
+  margin-left: 12px;
 `
 
 const FirmRatingLabel = styled.label`
@@ -58,28 +60,31 @@ const FirmRatingLabel = styled.label`
   font-weight: 600;
 `
 
-const FirmViewWrapper = styled.div`
+const FirmViewWrapper = styled.div<{ disabled?: boolean;}>`
   padding: 16px;
-  background-color: #DBECF2;
+  background-color: ${props => props.disabled ?  '#F2F2F2' : '#DBECF2'};
 `
 
 const FirmView: React.FC<{firm: IFirm, tier: string}> = ({tier, firm}) => {
+  const bookingFirm = firm.firmRegions[0].booking;
   return (
-    <FirmViewWrapper>
+    <FirmViewWrapper disabled={!bookingFirm}>
       <Row>
-        <TierRanking> {tier} </TierRanking>
-        <FirmName> {firm.name} </FirmName>
+        <TierRanking disabled={!bookingFirm}> {tier} </TierRanking>
+        <FirmName disabled={!bookingFirm}> {firm.name} </FirmName>
       </Row>
+      { bookingFirm && (
       <Row>
         <FirmRating firmRegion = {firm.firmRegions[0]}/>
       </Row>
+      )}
     </FirmViewWrapper>
   )
 }
 
 const FirmRating: React.FC<{firmRegion: IFirmRegion}> = ({firmRegion}) => {
   return (
-    <Row style={{marginLeft: "32px"}}>
+    <Row style={{marginLeft: "44px"}}>
       <FirmRatingLabel> Expertise and reputation</FirmRatingLabel>
       <StarRating stars={convertRatingToStars(firmRegion.expertiseAndReputationRating)} /> 
       <FirmRatingLabel> Client Satisfaction</FirmRatingLabel>
